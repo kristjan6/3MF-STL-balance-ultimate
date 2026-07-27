@@ -288,5 +288,33 @@ refreshComponentList();
   });
 })();
 </script>
+<script>
+(function(){
+  var app = document.querySelector('.app');
+  var sidebar = document.querySelector('.sidebar');
+  if(!app || !sidebar) return;
+  var handle = document.createElement('div');
+  handle.id = 'resizeHandle';
+  handle.style.cssText = 'position:relative;width:6px;cursor:col-resize;background:color-mix(in oklab,var(--color-text) 12%,transparent);grid-row:1;';
+  sidebar.insertAdjacentElement('afterend', handle);
+  app.style.gridTemplateColumns = 'minmax(280px, 460px) 6px 1fr';
+  var dragging = false;
+  handle.addEventListener('mousedown', function(e){
+    dragging = true;
+    document.body.style.userSelect = 'none';
+    e.preventDefault();
+  });
+  window.addEventListener('mousemove', function(e){
+    if(!dragging) return;
+    var rect = app.getBoundingClientRect();
+    var newWidth = Math.min(Math.max(e.clientX - rect.left, 280), 800);
+    app.style.gridTemplateColumns = newWidth + 'px 6px 1fr';
+  });
+  window.addEventListener('mouseup', function(){
+    dragging = false;
+    document.body.style.userSelect = '';
+  });
+})();
+</script>
 </body>
 </html>
