@@ -266,5 +266,27 @@ els.downloadTxtBtn.onclick=()=>downloadBlob('stl-balance-report.txt','text/plain
 [els.density,els.ballastDensity,els.targetMode,els.bambuPreset,els.customPoint,els.assemblyTargetMass,els.axisStart,els.axisEnd,els.weightPocketDist].forEach(el=>el.addEventListener('change',()=>{ if(state.parts.length||state.hardware.length) analyze(); }));
 refreshComponentList();
 </script>
+<script>
+(function(){
+  document.querySelectorAll('.panel').forEach(function(panel){
+    var h2 = panel.querySelector('h2');
+    if(!h2) return;
+    var children = Array.prototype.slice.call(panel.children).filter(function(c){ return c!==h2; });
+    var body = document.createElement('div');
+    body.className = 'panel-collapsible-body';
+    children.forEach(function(c){ body.appendChild(c); });
+    panel.appendChild(body);
+    h2.style.cursor = 'pointer';
+    h2.style.userSelect = 'none';
+    h2.insertAdjacentHTML('beforeend', ' <span class="panel-caret" style="float:right">\u25BE</span>');
+    h2.addEventListener('click', function(){
+      var collapsed = panel.classList.toggle('panel-collapsed');
+      body.style.display = collapsed ? 'none' : '';
+      var caret = h2.querySelector('.panel-caret');
+      if(caret) caret.textContent = collapsed ? '\u25B8' : '\u25BE';
+    });
+  });
+})();
+</script>
 </body>
 </html>
