@@ -287,55 +287,5 @@ refreshComponentList();
   });
 })();
 </script>
-<script>
-(function(){
-  var app = document.querySelector('.app');
-  var sidebar = document.querySelector('.sidebar');
-  if(!app || !sidebar) return;
-  var handle = document.createElement('div');
-  handle.id = 'resizeHandle';
-  handle.style.cssText = 'position:relative;width:6px;cursor:col-resize;background:color-mix(in oklab,var(--color-text) 12%,transparent);grid-row:1;';
-  sidebar.insertAdjacentElement('afterend', handle);
-  app.style.gridTemplateColumns = 'minmax(280px, 460px) 6px 1fr';
-  var dragging = false;
-  handle.addEventListener('mousedown', function(e){
-    dragging = true;
-    document.body.style.userSelect = 'none';
-    e.preventDefault();
-  });
-  window.addEventListener('mousemove', function(e){
-    if(!dragging) return;
-    var rect = app.getBoundingClientRect();
-    var newWidth = Math.min(Math.max(e.clientX - rect.left, 280), 800);
-    app.style.gridTemplateColumns = newWidth + 'px 6px 1fr';
-  });
-  window.addEventListener('mouseup', function(){
-    dragging = false;
-    document.body.style.userSelect = '';
-  });
-})();
-</script>
-<script>
-(function(){
-  var handle = document.getElementById('resizeHandle');
-  var app = document.querySelector('.app');
-  if(!handle || !app) return;
-  var dragging=false;
-  function move(clientX){
-    var rect = app.getBoundingClientRect();
-    var newWidth = Math.min(Math.max(clientX - rect.left, 280), 800);
-    app.style.gridTemplateColumns = newWidth + 'px 6px 1fr';
-  }
-  handle.addEventListener('touchstart', function(e){ dragging=true; e.preventDefault(); }, {passive:false});
-  window.addEventListener('touchmove', function(e){
-    if(!dragging || !e.touches[0]) return;
-    move(e.touches[0].clientX);
-  }, {passive:true});
-  window.addEventListener('touchend', function(){ dragging=false; });
-  var style = document.createElement('style');
-  style.textContent = '@media (max-width:1200px){#resizeHandle{display:none}.btn{min-height:48px}input,select,textarea{min-height:48px}table{display:block;overflow-x:auto;white-space:nowrap}#viewer{height:42dvh}.metrics{gap:var(--space-2)}}@media (max-width:480px){h1{font-size:1.3rem}.header{flex-wrap:wrap}}';
-  document.head.appendChild(style);
-})();
-</script>
 </body>
 </html>
