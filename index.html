@@ -47,6 +47,7 @@
         <div><div class="chip">Functional assembly balance workstation</div><h1>STL Balance Ultimate</h1></div>
       </div>
       <button class="btn secondary" id="themeBtn">Theme</button>
+        <button class="btn secondary" id="editToolbarBtn">Edit toolbar</button>
     </div>
 
     <div class="panel" style="padding:var(--space-5)">
@@ -286,6 +287,104 @@ let setOnPlateMode=false; const raycaster=new THREE.Raycaster(); const pointerVe
       if(caret) caret.textContent = collapsed ? '\u25B8' : '\u25BE';
     });
   });
+})();
+</script>
+<script>
+(function(){
+  var TOOLBAR_SELECTOR = '.sidebar';
+  var STORAGE_KEY = 'toolbarOrder_v1';
+  var editing = false;
+
+  function getButtons(){
+    return Array.prototype.slice.call(document.querySelectorAll('.sidebar .header button, .sidebar .panel button'));
+  }
+
+  function getDraggableContainer(){
+    return document.querySelector('.sidebar .header');
+  }
+
+  function saveOrder(){
+    var header = document.querySelector('.sidebar .header');
+    if(!header) return;
+    var ids = Array.prototype.slice.call(header.children).map(function(el){ return el.id || el.className; });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
+  }
+
+  function makeEditable(el){
+    el.setAttribute('draggable','true');
+    el.classList.add('toolbar-draggable');
+    el.addEventListener('dragstart', function(e){
+      e.dataTransfer.setData('text/plain', Array.prototype.indexOf.call(el.parentNode.children, el));
+      el.classList.add('dragging');
+    });
+    el.addEventListener('dragend', function(){ el.classList.remove('dragging'); saveOrder(); });
+    el.addEventListener('dragover', function(e){ e.preventDefault(); });
+    el.addEventListener('drop', function(e){
+      e.preventDefault();
+      var fromIdx = Number(e.dataTransfer.getData('text/plain'));
+      var parent = el.parentNode;
+      var children = Array.prototype.slice.call(parent.children);
+      var fromEl = children[fromIdx];
+      if(!fromEl || fromEl === el) return;
+      var toIdx = Array.prototype.indexOf.call(children, el);
+      if(fromIdx < toIdx){ parent.insertBefore(fromEl, el.nextSibling); }
+      else { parent.insertBefore(fromEl, el); }
+      saveOrder();
+    });
+  }
+
+  function enableEditing(){
+    var header = document.querySelector('.sidebar .header');
+    if(!header) return;
+    Array.prototype.slice.call(header.children).forEach(function(el){
+      if(el.tagName === 'BUTTON') makeEditable(el);
+    });
+  }
+
+  function disableEditing(){
+    var header = document.querySelector('.sidebar .header');
+    if(!header) return;
+    Array.prototype.slice.call(header.children).forEach(function(el){
+      el.removeAttribute('draggable');
+      el.classList.remove('toolbar-draggable');
+    });
+  }
+
+  function restoreOrder(){
+    var saved = localStorage.getItem(STORAGE_KEY);
+    if(!saved) return;
+    try{
+      var ids = JSON.parse(saved);
+      var header = document.querySelector('.sidebar .header');
+      if(!header) return;
+      ids.forEach(function(idOrClass){
+        var el = header.querySelector('#' + idOrClass) || null;
+        if(el) header.appendChild(el);
+      });
+    }catch(e){ console.warn('toolbar order restore failed', e); }
+  }
+
+  restoreOrder();
+
+  var editBtn = document.getElementById('editToolbarBtn');
+  if(editBtn){
+    editBtn.addEventListener('click', function(){
+      editing = !editing;
+      if(editing){
+        enableEditing();
+        editBtn.textContent = 'Done editing';
+        editBtn.classList.add('active');
+      } else {
+        disableEditing();
+        editBtn.textContent = 'Edit toolbar';
+        editBtn.classList.remove('active');
+      }
+    });
+  }
+
+  var style = document.createElement('style');
+  style.textContent = '.toolbar-draggable{cursor:grab;} .toolbar-draggable.dragging{opacity:0.4;} .toolbar-draggable:hover{outline:2px dashed var(--color-accent, #6fb0b7);}';
+  document.head.appendChild(style);
 })();
 </script>
 </body>
