@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STL Balance Ultimate</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <style>
+    :root, [data-theme="light"] {
+      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+      --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
+      --space-1:.25rem; --space-2:.5rem; --space-3:.75rem; --space-4:1rem; --space-5:1.25rem; --space-6:1.5rem; --space-8:2rem; --space-10:2.5rem; --space-12:3rem; --space-16:4rem;
+      --color-bg:#f7f6f2; --color-surface:#f9f8f5; --color-surface-2:#fbfbf9; --color-surface-offset:#f3f0ec; --color-border:#d4d1ca; --color-text:#28251d; --color-text-muted:#6f6d68; --color-text-faint:#a7a49e; --color-primary:#01696f; --color-primary-hover:#0c4e54; --color-primary-highlight:#cedcd8; --color-warning:#964219; --color-error:#a12c7b; --color-success:#437a22; --radius-sm:.375rem; --radius-md:.6rem; --radius-lg:.95rem; --radius-xl:1.25rem; --radius-full:9999px; --shadow-sm:0 1px 2px rgba(25,20,10,.07); --shadow-md:0 8px 24px rgba(25,20,10,.08); --shadow-lg:0 18px 42px rgba(25,20,10,.14); --font-body:'Satoshi', Inter, sans-serif;
+    }
+    [data-theme="dark"] {
+      --color-bg:#171614; --color-surface:#1c1b19; --color-surface-2:#201f1d; --color-surface-offset:#252320; --color-border:#393836; --color-text:#e2dfd7; --color-text-muted:#a49f94; --color-text-faint:#706c63; --color-primary:#4f98a3; --color-primary-hover:#68aeb7; --color-primary-highlight:#24343a; --color-warning:#d19062; --color-error:#d163a7; --color-success:#7eb15e; --shadow-sm:0 1px 2px rgba(0,0,0,.2); --shadow-md:0 8px 24px rgba(0,0,0,.28); --shadow-lg:0 18px 42px rgba(0,0,0,.4);
+    }
+    *,*::before,*::after{box-sizing:border-box} html,body{margin:0;min-height:100%;background:var(--color-bg);color:var(--color-text);font-family:var(--font-body)} body{font-size:var(--text-base);line-height:1.55}
+    button,input,select,textarea{font:inherit;color:inherit} input,select,textarea{width:100%;background:var(--color-surface-offset);border:1px solid color-mix(in oklab,var(--color-text) 14%,transparent);border-radius:var(--radius-md);padding:.8rem .9rem} textarea{min-height:86px;resize:vertical}
+    .app{min-height:100dvh;display:grid;grid-template-columns:minmax(350px,460px) 1fr}.sidebar{padding:var(--space-6);border-right:1px solid color-mix(in oklab,var(--color-text) 10%,transparent);background:linear-gradient(180deg,var(--color-surface),var(--color-surface-2));overflow:auto}.main{overflow:auto}
+    .stack{display:grid;gap:var(--space-4)} .panel{background:var(--color-surface);border:1px solid color-mix(in oklab,var(--color-text) 10%,transparent);border-radius:var(--radius-xl);box-shadow:var(--shadow-md)}
+    .header{display:flex;justify-content:space-between;gap:var(--space-4);align-items:flex-start}.logo{display:flex;gap:var(--space-3);align-items:center}.logo svg{width:38px;height:38px;color:var(--color-primary)}
+    h1{margin:0;font-size:var(--text-xl);line-height:1.02} h2{margin:0 0 var(--space-3);font-size:var(--text-lg)} h3{margin:0;font-size:var(--text-base)} p{margin:0;color:var(--color-text-muted)}
+    .chip,.tag{display:inline-flex;align-items:center;gap:.45rem;min-height:32px;padding:.35rem .7rem;border-radius:var(--radius-full);font-size:var(--text-xs)} .chip{background:var(--color-primary-highlight)} .tag{background:color-mix(in oklab,var(--color-text) 8%,transparent)}
+    .btn{min-height:44px;padding:.8rem 1rem;border-radius:var(--radius-full);border:1px solid transparent;cursor:pointer;transition:.18s ease}.btn.primary{background:var(--color-primary);color:#fff}.btn.primary:hover{background:var(--color-primary-hover)}.btn.secondary{background:var(--color-surface-offset);border-color:color-mix(in oklab,var(--color-text) 12%,transparent)}
+    .btns,.row{display:flex;gap:var(--space-3);flex-wrap:wrap}.row2,.row3{display:grid;gap:var(--space-3)} .row2{grid-template-columns:1fr 1fr}.row3{grid-template-columns:repeat(3,1fr)} .field{display:grid;gap:var(--space-2)} .field label{font-size:var(--text-sm);font-weight:700}
+    .subtle{font-size:var(--text-sm);color:var(--color-text-muted)} .tiny{font-size:var(--text-xs);color:var(--color-text-faint)} .mono{font-variant-numeric:tabular-nums}
+    .hero{padding:var(--space-6);display:grid;gap:var(--space-6)} .metrics{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:var(--space-4)} .metric{padding:var(--space-4)} .metric .k{font-size:var(--text-xs);letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-muted)} .metric .v{margin-top:.45rem;font-size:clamp(1.05rem, .95rem + .85vw, 1.5rem);font-weight:700}
+    #viewer{width:100%;height:60dvh;border-radius:var(--radius-xl);overflow:hidden;background:radial-gradient(circle at 20% 20%, color-mix(in oklab,var(--color-primary) 20%,transparent), transparent 30%), var(--color-surface);border:1px solid color-mix(in oklab,var(--color-text) 10%,transparent);box-shadow:var(--shadow-lg)}
+    .sections{padding:0 var(--space-6) var(--space-6);display:grid;gap:var(--space-6)} .grid2{display:grid;grid-template-columns:1.1fr .9fr;gap:var(--space-6)}
+    table{width:100%;border-collapse:collapse;font-size:var(--text-sm)} th,td{padding:.75rem;border-bottom:1px solid color-mix(in oklab,var(--color-text) 10%,transparent);vertical-align:top;text-align:left} th{color:var(--color-text-muted)}
+    .report{white-space:pre-wrap;background:var(--color-surface-offset);border-radius:var(--radius-lg);padding:var(--space-4);font-size:var(--text-sm)} .status{padding:var(--space-4);border-radius:var(--radius-lg);background:color-mix(in oklab,var(--color-primary) 10%,var(--color-surface));border:1px solid color-mix(in oklab,var(--color-primary) 24%,transparent)}
+    .card{padding:var(--space-4);border-radius:var(--radius-lg);background:var(--color-surface-offset);border:1px solid color-mix(in oklab,var(--color-text) 10%,transparent)} .list{display:grid;gap:var(--space-3)}
+    .selected{outline:2px solid var(--color-primary)} .good{color:var(--color-success)} .warn{color:var(--color-warning)}
+    @media (max-width:1200px){.app{grid-template-columns:1fr}.sidebar{border-right:none;border-bottom:1px solid color-mix(in oklab,var(--color-text) 10%,transparent)}.metrics,.grid2,.row2,.row3{grid-template-columns:1fr}#viewer{height:52dvh}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar stack">
+    <div class="header">
+      <div class="logo">
+        <svg viewBox="0 0 64 64" fill="none" aria-label="STL Balance Ultimate logo"><path d="M10 48 32 10l22 38" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 48h24" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><circle cx="32" cy="33" r="6" fill="currentColor"/></svg>
+        <div><div class="chip">Functional assembly balance workstation</div><h1>STL Balance Ultimate</h1></div>
+      </div>
+      <button class="btn secondary" id="themeBtn">Theme</button>
+    </div>
+
+    <div class="panel" style="padding:var(--space-5)">
+      <h2>Project setup</h2>
+      <div class="stack">
+        <div class="row2">
+          <div class="field"><label for="density">Default part density (g/cm³)</label><input id="density" type="number" step="0.01" value="1.24"></div>
+          <div class="field"><label for="ballastDensity">Ballast density (g/cm³)</label><input id="ballastDensity" type="number" step="0.01" value="7.80"></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label for="targetMode">Neutral target</label><select id="targetMode"><option value="bbox-center">Assembly bounding-box center</option><option value="origin">Global origin</option><option value="custom">Custom pivot point</option><option value="axis-mid">Pivot axis midpoint</option></select></div>
+          <div class="field"><label for="bambuPreset">Bambu slicing intent</label><select id="bambuPreset"><option value="general">General functional part</option><option value="low-infill">Low infill shell with ballast cavity</option><option value="high-stiffness">High stiffness with limited hollowing</option><option value="pivot-part">Pivot or bearing carrier</option></select></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label for="customPoint">Custom pivot XYZ in mm</label><input id="customPoint" type="text" value="0,0,0"></div>
+          <div class="field"><label for="assemblyTargetMass">Target assembly mass (g)</label><input id="assemblyTargetMass" type="number" step="0.1" value="0"></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label for="axisStart">Pivot axis start XYZ</label><input id="axisStart" type="text" value="0,0,0"></div>
+          <div class="field"><label for="axisEnd">Pivot axis end XYZ</label><input id="axisEnd" type="text" value="0,60,0"></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label for="weightPocketDist">Ballast pocket lever arm (mm)</label><input id="weightPocketDist" type="number" step="0.1" value="25"></div>
+          <div class="field"><label for="notes">Build notes</label><textarea id="notes" placeholder="Bearing axis fixed, magnets on left wall, battery may move ±5 mm."></textarea></div>
+        </div>
+        <div class="btns"><button class="btn secondary" id="saveProjectBtn">Export project JSON</button><button class="btn secondary" id="loadProjectBtn">Import project JSON</button><input id="projectFile" type="file" accept="application/json" style="display:none"></div>
+      </div>
+    </div>
+
+    <div class="panel" style="padding:var(--space-5)">
+      <h2>Add STL part</h2>
+      <div class="stack">
+        <div class="field"><label for="multiFile">STL file(s)</label><input id="multiFile" type="file" accept=".stl" multiple></div>
+        <div class="row3">
+          <div class="field"><label for="partName">Name override</label><input id="partName" type="text" placeholder="camera-bracket"></div>
+          <div class="field"><label for="partDensity">Part density</label><input id="partDensity" type="number" step="0.01" value="1.24"></div>
+          <div class="field"><label for="partColor">Part color</label><input id="partColor" type="color" value="#6fb0b7"></div>
+        </div>
+        <div class="row3">
+          <div class="field"><label for="partTx">Translate X</label><input id="partTx" type="number" step="0.1" value="0"></div>
+          <div class="field"><label for="partTy">Translate Y</label><input id="partTy" type="number" step="0.1" value="0"></div>
+          <div class="field"><label for="partTz">Translate Z</label><input id="partTz" type="number" step="0.1" value="0"></div>
+        </div>
+        <div class="row3">
+          <div class="field"><label for="partRx">Rotate X°</label><input id="partRx" type="number" step="1" value="0"></div>
+          <div class="field"><label for="partRy">Rotate Y°</label><input id="partRy" type="number" step="1" value="0"></div>
+          <div class="field"><label for="partRz">Rotate Z°</label><input id="partRz" type="number" step="1" value="0"></div>
+        </div>
+        <div class="btns"><button class="btn primary" id="addPartsBtn">Add STL parts</button><button class="btn secondary" id="sampleBtn">Load functional demo</button><button class="btn secondary" id="resetBtn">Reset</button></div>
+      </div>
+    </div>
+
+    <div class="panel" style="padding:var(--space-5)">
+      <h2>Discrete masses</h2>
+      <div class="stack">
+        <div class="row3">
+          <div class="field"><label for="hwName">Hardware name</label><input id="hwName" type="text" placeholder="battery"></div>
+          <div class="field"><label for="hwMass">Mass (g)</label><input id="hwMass" type="number" step="0.01" value="0"></div>
+          <div class="field"><label for="hwColor">Color</label><input id="hwColor" type="color" value="#ffd166"></div>
+        </div>
+        <div class="row3">
+          <div class="field"><label for="hwX">X</label><input id="hwX" type="number" step="0.1" value="0"></div>
+          <div class="field"><label for="hwY">Y</label><input id="hwY" type="number" step="0.1" value="0"></div>
+          <div class="field"><label for="hwZ">Z</label><input id="hwZ" type="number" step="0.1" value="0"></div>
+        </div>
+        <div class="btns"><button class="btn secondary" id="addHardwareBtn">Add hardware mass</button><button class="btn secondary" id="demoHardwareBtn">Add demo hardware</button></div>
+      </div>
+    </div>
+
+    <div class="panel" style="padding:var(--space-5)">
+      <h2>Component editor</h2>
+      <div class="tiny">Select a part or hardware item below, edit values, then apply updates.</div>
+      <div class="list" id="componentList"></div>
+      <div class="stack" style="margin-top:var(--space-4)">
+        <div class="field"><label for="selectedId">Selected component</label><input id="selectedId" type="text" readonly></div>
+        <div class="row3">
+          <div class="field"><label for="editX">X / Tx</label><input id="editX" type="number" step="0.1" value="0"></div>
+          <div class="field"><label for="editY">Y / Ty</label><input id="editY" type="number" step="0.1" value="0"></div>
+          <div class="field"><label for="editZ">Z / Tz</label><input id="editZ" type="number" step="0.1" value="0"></div>
+        </div>
+        <div class="row3">
+          <div class="field"><label for="editRx">Rx</label><input id="editRx" type="number" step="1" value="0"></div>
+          <div class="field"><label for="editRy">Ry</label><input id="editRy" type="number" step="1" value="0"></div>
+          <div class="field"><label for="editRz">Rz</label><input id="editRz" type="number" step="1" value="0"></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label for="editMassOrDensity">Mass / density</label><input id="editMassOrDensity" type="number" step="0.01" value="0"></div>
+          <div class="field"><label for="editName">Name</label><input id="editName" type="text"></div>
+        </div>
+        <div class="btns"><button class="btn primary" id="applyEditBtn">Apply changes</button><button class="btn secondary" id="removeSelectedBtn">Remove selected</button><button class="btn secondary" id="analyzeBtn">Analyze now</button></div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <section class="hero">
+      <div class="metrics">
+        <div class="panel metric"><div class="k">Part volume</div><div class="v mono" id="mVolume">—</div></div>
+        <div class="panel metric"><div class="k">Part mass</div><div class="v mono" id="mPartMass">—</div></div>
+        <div class="panel metric"><div class="k">Hardware mass</div><div class="v mono" id="mHardwareMass">—</div></div>
+        <div class="panel metric"><div class="k">Total mass</div><div class="v mono" id="mTotalMass">—</div></div>
+        <div class="panel metric"><div class="k">Assembly COM</div><div class="v mono" id="mCom">—</div></div>
+        <div class="panel metric"><div class="k">Offset</div><div class="v mono" id="mShift">—</div></div>
+      </div>
+      <div id="viewer"></div>
+    </section>
+
+    <section class="sections">
+      <div class="grid2">
+        <div class="panel" style="padding:var(--space-5)">
+          <h2>Balance strategy</h2>
+          <table><thead><tr><th>Action</th><th>Reason</th><th>Estimate</th></tr></thead><tbody id="actionsTable"></tbody></table>
+        </div>
+        <div class="panel" style="padding:var(--space-5)">
+          <h2>Summary</h2>
+          <div class="list subtle" id="summaryList"></div>
+          <div class="status" id="statusBox" style="margin-top:var(--space-4)">Add parts or hardware to begin.</div>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="panel" style="padding:var(--space-5)">
+          <h2>Breakdown</h2>
+          <table><thead><tr><th>Component</th><th>Type</th><th>Mass</th><th>Position</th></tr></thead><tbody id="breakdownTable"></tbody></table>
+          <div class="btns" style="margin-top:var(--space-4)"><button class="btn secondary" id="downloadTxtBtn">Download TXT</button><button class="btn secondary" id="downloadJsonBtn">Download JSON</button><button class="btn secondary" id="downloadCsvBtn">Download CSV</button></div>
+        </div>
+        <div class="panel" style="padding:var(--space-5)">
+          <h2>Engineering report</h2>
+          <div class="report" id="reportBox">No analysis yet.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script type="module">
+import * as THREE from 'https://esm.sh/three@0.179.1';
+import { STLLoader } from 'https://esm.sh/three@0.179.1/examples/jsm/loaders/STLLoader.js';
+import { OrbitControls } from 'https://esm.sh/three@0.179.1/examples/jsm/controls/OrbitControls.js';
+
+const els = Object.fromEntries([...document.querySelectorAll('[id]')].map(el => [el.id, el]));
+const state = { parts: [], hardware: [], analysis: null, selected: null };
+const container = els.viewer;
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 6000);
+const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); renderer.setSize(container.clientWidth, container.clientHeight); container.appendChild(renderer.domElement);
+const controls = new OrbitControls(camera, renderer.domElement); controls.enableDamping = true; camera.position.set(180,140,220);
+scene.add(new THREE.HemisphereLight(0xffffff,0x223344,1.15)); const dir=new THREE.DirectionalLight(0xffffff,1.15); dir.position.set(160,180,120); scene.add(dir); scene.add(new THREE.GridHelper(420,28,0x44606b,0x2b3135)); scene.add(new THREE.AxesHelper(80));
+const assemblyGroup = new THREE.Group(); const overlayGroup = new THREE.Group(); scene.add(assemblyGroup); scene.add(overlayGroup);
+function animate(){ requestAnimationFrame(animate); controls.update(); renderer.render(scene,camera); } animate();
+window.addEventListener('resize',()=>{ const w=container.clientWidth,h=container.clientHeight; camera.aspect=w/h; camera.updateProjectionMatrix(); renderer.setSize(w,h); });
+function setTheme(toggle){ const root=document.documentElement; const current=root.getAttribute('data-theme')==='dark'?'dark':'light'; const next=toggle?(current==='dark'?'light':'dark'):current; root.setAttribute('data-theme',next); renderer.setClearColor(next==='dark'?0x171614:0xf7f6f2,1); } setTheme(false); els.themeBtn.onclick=()=>setTheme(true);
+const fmt=(n,d=2)=>Number.isFinite(n)?Number(n).toFixed(d):'—'; const vecFmt=v=>`${fmt(v.x,1)}, ${fmt(v.y,1)}, ${fmt(v.z,1)} mm`; const toRad=v=>Number(v||0)*Math.PI/180;
+const downloadBlob=(name,type,content)=>{ const blob=new Blob([content],{type}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),500); };
+function clearGroup(g){ while(g.children.length){ const o=g.children.pop(); o.geometry?.dispose?.(); o.material?.dispose?.(); } }
+function parseVecFromInputs(x,y,z){ return new THREE.Vector3(Number(x.value)||0, Number(y.value)||0, Number(z.value)||0); }
+function parseVecString(s){ const vals=(s||'').split(',').map(v=>Number(v.trim())); return vals.length===3 && vals.every(Number.isFinite) ? new THREE.Vector3(vals[0],vals[1],vals[2]) : new THREE.Vector3(); }
+function pointToSegmentProjection(point, a, b){ const ab=b.clone().sub(a); const t=Math.max(0,Math.min(1, point.clone().sub(a).dot(ab)/Math.max(ab.lengthSq(),1e-9))); return a.clone().add(ab.multiplyScalar(t)); }
+function signedTetraVolume(a,b,c){ return a.dot(new THREE.Vector3().crossVectors(b,c))/6; }
+function centroidWeighted(a,b,c,vol){ return new THREE.Vector3().add(a).add(b).add(c).multiplyScalar(vol/4); }
+function computeMassProperties(geometry){ const g=geometry.toNonIndexed(); const pos=g.attributes.position; let volume=0, area=0; const moment=new THREE.Vector3(); const min=new THREE.Vector3(Infinity,Infinity,Infinity), max=new THREE.Vector3(-Infinity,-Infinity,-Infinity); for(let i=0;i<pos.count;i+=3){ const a=new THREE.Vector3().fromBufferAttribute(pos,i), b=new THREE.Vector3().fromBufferAttribute(pos,i+1), c=new THREE.Vector3().fromBufferAttribute(pos,i+2); min.min(a).min(b).min(c); max.max(a).max(b).max(c); const cross=new THREE.Vector3().subVectors(b,a).cross(new THREE.Vector3().subVectors(c,a)); area += cross.length()*0.5; const vol=signedTetraVolume(a,b,c); volume += vol; moment.add(centroidWeighted(a,b,c,vol)); } const signed=volume; volume=Math.abs(volume); const com=volume>1e-9?moment.multiplyScalar(1/signed):new THREE.Vector3(); const bbox=new THREE.Box3(min,max); return { volumeMm3:volume, surfaceAreaMm2:area, com, bbox, size:bbox.getSize(new THREE.Vector3()), bboxCenter:bbox.getCenter(new THREE.Vector3()), geometry:g, closedLikely:volume>1e-5 }; }
+function applyTransformToGeometry(geometry, transform){ const clone=geometry.clone(); const e=new THREE.Euler(toRad(transform.rx),toRad(transform.ry),toRad(transform.rz),'XYZ'); const m=new THREE.Matrix4().makeRotationFromEuler(e); m.setPosition(transform.tx, transform.ty, transform.tz); clone.applyMatrix4(m); clone.computeVertexNormals(); return clone; }
+function addMarker(pos,color=0xff5577,r=3){ const s=new THREE.Mesh(new THREE.SphereGeometry(r,24,24),new THREE.MeshStandardMaterial({color,emissive:color,emissiveIntensity:.2})); s.position.copy(pos); overlayGroup.add(s); const t=new THREE.Mesh(new THREE.TorusGeometry(r*1.8,0.22,14,42),new THREE.MeshStandardMaterial({color})); t.rotation.x=Math.PI/2; t.position.copy(pos); overlayGroup.add(t); }
+function addLine(a,b,color=0xf6bd60){ const g=new THREE.BufferGeometry().setFromPoints([a,b]); overlayGroup.add(new THREE.Line(g,new THREE.LineBasicMaterial({color}))); }
+function renderScene(target, assemblyCom, axisProjection){ clearGroup(assemblyGroup); clearGroup(overlayGroup); const bboxAll=new THREE.Box3(); state.parts.forEach((part,i)=>{ const mesh=new THREE.Mesh(part.transformedGeometry, new THREE.MeshStandardMaterial({color:part.color, roughness:.45, metalness:.04, transparent:true, opacity:.92})); assemblyGroup.add(mesh); bboxAll.expandByObject(mesh); }); state.hardware.forEach(hw=>{ const s=Math.cbrt(Math.max(hw.mass,0.1))*1.8; const cube=new THREE.Mesh(new THREE.BoxGeometry(s,s,s),new THREE.MeshStandardMaterial({color:hw.color, emissive:hw.color, emissiveIntensity:.08})); cube.position.copy(hw.position); assemblyGroup.add(cube); bboxAll.expandByPoint(hw.position); }); addMarker(assemblyCom,0xff5577,3.4); addMarker(target,0x7ed957,2.8); addMarker(axisProjection,0x5aa9e6,2.5); addLine(assemblyCom,target,0xf6bd60); addLine(assemblyCom,axisProjection,0x5aa9e6); const center=bboxAll.isEmpty()?new THREE.Vector3():bboxAll.getCenter(new THREE.Vector3()); const size=bboxAll.isEmpty()?new THREE.Vector3(120,120,120):bboxAll.getSize(new THREE.Vector3()); controls.target.copy(center); camera.position.copy(center.clone().add(new THREE.Vector3(size.x*1.35+60,size.y*1.1+70,size.z*1.45+80))); camera.lookAt(center); }
+function targetPoint(overallBBox){ if(els.targetMode.value==='origin') return new THREE.Vector3(); if(els.targetMode.value==='custom') return parseVecString(els.customPoint.value); if(els.targetMode.value==='axis-mid'){ const a=parseVecString(els.axisStart.value), b=parseVecString(els.axisEnd.value); return a.clone().add(b).multiplyScalar(.5); } return overallBBox.getCenter(new THREE.Vector3()); }
+function rotationHeuristic(offset,size){ return [{axis:'X / roll',ratio:Math.abs(offset.x)/Math.max(size.x,1),move:`rotate ${offset.x>0?'-':'+'}90° around Y`},{axis:'Y / vertical',ratio:Math.abs(offset.y)/Math.max(size.y,1),move:`rotate ${offset.y>0?'+':'-'}90° around X`},{axis:'Z / pitch',ratio:Math.abs(offset.z)/Math.max(size.z,1),move:`rotate ${offset.z>0?'+':'-'}90° around Y`}].sort((a,b)=>b.ratio-a.ratio)[0]; }
+
+function analyze(){
+  if(!state.parts.length && !state.hardware.length){ els.statusBox.textContent='Add STL parts or hardware first.'; return; }
+  let partVolumeTotal=0, partMassTotal=0, hardwareMassTotal=0, areaTotal=0; const weighted=new THREE.Vector3(); const breakdown=[]; const overallBBox=new THREE.Box3();
+  state.parts.forEach((part,idx)=>{ part.transformedGeometry = applyTransformToGeometry(part.baseGeometry, part.transform); const props = computeMassProperties(part.transformedGeometry); part.liveProps = props; const volumeCm3=props.volumeMm3/1000; const mass=volumeCm3*part.density; partVolumeTotal += volumeCm3; partMassTotal += mass; areaTotal += props.surfaceAreaMm2/100; weighted.add(props.com.clone().multiplyScalar(mass)); overallBBox.union(props.bbox); breakdown.push({id:part.id,name:part.name,type:'STL',mass,pos:props.com.clone(),detail:`ρ=${fmt(part.density,2)} g/cm³`}); });
+  state.hardware.forEach(hw=>{ hardwareMassTotal += hw.mass; weighted.add(hw.position.clone().multiplyScalar(hw.mass)); overallBBox.expandByPoint(hw.position); breakdown.push({id:hw.id,name:hw.name,type:'Hardware',mass:hw.mass,pos:hw.position.clone(),detail:'point mass'}); });
+  const totalMass=partMassTotal+hardwareMassTotal; const assemblyCom=totalMass>0?weighted.multiplyScalar(1/totalMass):new THREE.Vector3(); if(overallBBox.isEmpty()) overallBBox.expandByPoint(assemblyCom);
+  const target=targetPoint(overallBBox); const axisA=parseVecString(els.axisStart.value), axisB=parseVecString(els.axisEnd.value); const axisProjection=pointToSegmentProjection(assemblyCom, axisA, axisB); const offset=assemblyCom.clone().sub(target); const axisOffset=assemblyCom.clone().sub(axisProjection); const size=overallBBox.getSize(new THREE.Vector3()); const dominant=rotationHeuristic(offset,size); const leverAxis=['x','y','z'].map(k=>({k,v:Math.abs(offset[k])})).sort((a,b)=>b.v-a.v)[0].k; const lever=Math.max(Number(els.weightPocketDist.value)||Math.max(size[leverAxis]/2,1),1); const ballastDensity=Math.max(Number(els.ballastDensity.value)||7.8,0.001); const defaultDensity=Math.max(Number(els.density.value)||1.24,0.001); const ballastMass=totalMass*Math.abs(offset[leverAxis])/lever; const ballastVolume=ballastMass/ballastDensity; const hollowVolume=ballastMass/defaultDensity; const spareMass=Math.max((Number(els.assemblyTargetMass.value)||0)-totalMass,0); const symmetryScore=1-Math.min(offset.length()/Math.max(size.length(),1),1); const balanceClass=offset.length()<1?'near-neutral':offset.length()<5?'trim-tunable':'requires correction';
+  renderScene(target, assemblyCom, axisProjection);
+  els.mVolume.textContent=`${fmt(partVolumeTotal,2)} cm³`; els.mPartMass.textContent=`${fmt(partMassTotal,2)} g`; els.mHardwareMass.textContent=`${fmt(hardwareMassTotal,2)} g`; els.mTotalMass.textContent=`${fmt(totalMass,2)} g`; els.mCom.textContent=vecFmt(assemblyCom); els.mShift.textContent=`${fmt(offset.length(),2)} mm`;
+  els.summaryList.innerHTML=[`Assembly box: ${fmt(size.x,1)} × ${fmt(size.y,1)} × ${fmt(size.z,1)} mm`,`Target point: ${vecFmt(target)}`,`Axis projection: ${vecFmt(axisProjection)}`,`Distance from pivot axis: ${fmt(axisOffset.length(),2)} mm`,`Surface area across STL parts: ${fmt(areaTotal,2)} cm²`,`Symmetry score: ${fmt(symmetryScore*100,1)}%`,`Bambu preset: ${els.bambuPreset.value}`].map(t=>`<div>${t}</div>`).join('');
+  const actions=[
+    {a:'Reorient before slicing', r:`Largest imbalance appears on ${dominant.axis}; reorientation can shorten the lever arm to the pivot or bearing line.`, e:dominant.move},
+    {a:'Ballast cavity', r:`Reserve a cavity opposite the ${leverAxis.toUpperCase()} drift in the shell or pocket area.`, e:`${fmt(ballastMass,2)} g at ${fmt(lever,1)} mm, volume ${fmt(ballastVolume,3)} cm³`},
+    {a:'Lightening cut', r:'Remove plastic from the currently heavy side while preserving interfaces, bosses, and bearing lands.', e:`Relief volume ≈ ${fmt(hollowVolume,3)} cm³`},
+    {a:'Hardware relocation', r:'Move discrete masses such as battery, camera, magnets, or inserts toward the neutral point.', e:`10 g trim mass moved by ${fmt(offset.length()*Math.max(totalMass,1)/10,2)} mm equivalent`},
+    {a:'Mass budget', r:'Reserve room for late-stage trim weights or tolerance stack-up before final slicing.', e:`Remaining target mass headroom ${fmt(spareMass,2)} g`}
+  ];
+  els.actionsTable.innerHTML=actions.map(x=>`<tr><td>${x.a}</td><td>${x.r}</td><td class="mono">${x.e}</td></tr>`).join('');
+  els.breakdownTable.innerHTML=breakdown.map(row=>`<tr><td>${row.name}<div class="tiny">${row.detail}</div></td><td>${row.type}</td><td class="mono">${fmt(row.mass,2)} g</td><td class="mono">${vecFmt(row.pos)}</td></tr>`).join('');
+  const report=`STL BALANCE ULTIMATE REPORT\n\nAssembly overview\n- STL part count: ${state.parts.length}\n- Discrete hardware count: ${state.hardware.length}\n- STL volume: ${fmt(partVolumeTotal,3)} cm^3\n- STL mass: ${fmt(partMassTotal,3)} g\n- Hardware mass: ${fmt(hardwareMassTotal,3)} g\n- Total assembly mass: ${fmt(totalMass,3)} g\n- Assembly box: ${fmt(size.x,2)} x ${fmt(size.y,2)} x ${fmt(size.z,2)} mm\n- STL surface area: ${fmt(areaTotal,3)} cm^2\n\nCenters\n- Assembly COM: ${vecFmt(assemblyCom)}\n- Neutral target: ${vecFmt(target)}\n- Pivot-axis projection: ${vecFmt(axisProjection)}\n- Offset vector: ${fmt(offset.x,2)}, ${fmt(offset.y,2)}, ${fmt(offset.z,2)} mm\n- Resultant offset magnitude: ${fmt(offset.length(),2)} mm\n- Distance from pivot axis: ${fmt(axisOffset.length(),2)} mm\n- Balance class: ${balanceClass}\n\nRecommendations\n1. Reorient: ${dominant.move}.\n2. Add ballast opposite the ${leverAxis.toUpperCase()} drift: ${fmt(ballastMass,2)} g.\n3. Equivalent ballast cavity volume at ${fmt(ballastDensity,2)} g/cm^3: ${fmt(ballastVolume,3)} cm^3.\n4. Hollow heavy side by about ${fmt(hollowVolume,3)} cm^3 using shell or modifier cuts.\n5. Keep ${fmt(spareMass,2)} g headroom if you target a higher finished assembly mass.\n6. Bambu slicing intent: ${els.bambuPreset.value}.\n\nBambu workflow\n- Use this report before slicing to decide orientation, shell thickness, infill bias, and cavity placement.\n- For single-material parts, modifier cavities and shell adjustments are the safest way to trim balance without changing interfaces.\n- For hardware-carrying parts, enter screw, magnet, bearing, and insert masses as discrete items before trusting the final COM.\n\nComponents\n${breakdown.map(row=>`- ${row.name} [${row.type}] ${fmt(row.mass,2)} g at ${vecFmt(row.pos)}`).join('\n')}\n\nNotes\n${els.notes.value || '- No additional notes provided.'}\n\nAssumptions\n- STL parts are treated as uniform-density solids.\n- Hardware is modeled as point masses.\n- Dynamic inertia and modal vibration are not solved in this static balance model.`;
+  els.reportBox.textContent=report;
+  state.analysis={ partVolumeTotal, partMassTotal, hardwareMassTotal, totalMass, areaTotal, assemblyCom, target, axisProjection, axisOffset, offset, size, symmetryScore, balanceClass, dominant, leverAxis, lever, ballastMass, ballastVolume, hollowVolume, spareMass, report, breakdown, bambuPreset: els.bambuPreset.value };
+  els.statusBox.innerHTML=`<strong>Analysis complete.</strong> Offset to neutral is <span class="mono">${fmt(offset.length(),2)} mm</span>; pivot-axis distance is <span class="mono">${fmt(axisOffset.length(),2)} mm</span>. ${offset.length()<1?'<span class="good">Assembly is close to neutral.</span>':'Tune orientation, cavities, or ballast before slicing.'}`;
+}
+
+function selectedObject(){ if(!state.selected) return null; const [type,id]=state.selected.split(':'); return type==='part' ? state.parts.find(p=>p.id===id) : state.hardware.find(h=>h.id===id); }
+function refreshComponentList(){ els.componentList.innerHTML=[...state.parts.map(p=>({kind:'part', id:p.id, title:p.name, meta:`ρ ${fmt(p.density,2)} · T ${fmt(p.transform.tx,1)},${fmt(p.transform.ty,1)},${fmt(p.transform.tz,1)} · R ${fmt(p.transform.rx,0)},${fmt(p.transform.ry,0)},${fmt(p.transform.rz,0)}`})), ...state.hardware.map(h=>({kind:'hardware', id:h.id, title:h.name, meta:`${fmt(h.mass,2)} g @ ${fmt(h.position.x,1)},${fmt(h.position.y,1)},${fmt(h.position.z,1)}`}))].map(item=>`<button class="card ${state.selected===item.kind+':'+item.id?'selected':''}" data-select="${item.kind}:${item.id}" style="text-align:left"><div class="row" style="justify-content:space-between"><h3>${item.title}</h3><span class="tag">${item.kind}</span></div><div class="tiny">${item.meta}</div></button>`).join('') || '<div class="tiny">No components added yet.</div>';
+  document.querySelectorAll('[data-select]').forEach(btn=>btn.onclick=()=>selectComponent(btn.dataset.select));
+}
+function selectComponent(sel){ state.selected=sel; const obj=selectedObject(); els.selectedId.value=sel||''; if(!obj) return refreshComponentList(); els.editName.value=obj.name; if(sel.startsWith('part:')){ els.editX.value=obj.transform.tx; els.editY.value=obj.transform.ty; els.editZ.value=obj.transform.tz; els.editRx.value=obj.transform.rx; els.editRy.value=obj.transform.ry; els.editRz.value=obj.transform.rz; els.editMassOrDensity.value=obj.density; } else { els.editX.value=obj.position.x; els.editY.value=obj.position.y; els.editZ.value=obj.position.z; els.editRx.value=0; els.editRy.value=0; els.editRz.value=0; els.editMassOrDensity.value=obj.mass; } refreshComponentList(); }
+function applyEdits(){ const obj=selectedObject(); if(!obj) return; obj.name=els.editName.value.trim() || obj.name; if(state.selected.startsWith('part:')){ obj.transform.tx=Number(els.editX.value)||0; obj.transform.ty=Number(els.editY.value)||0; obj.transform.tz=Number(els.editZ.value)||0; obj.transform.rx=Number(els.editRx.value)||0; obj.transform.ry=Number(els.editRy.value)||0; obj.transform.rz=Number(els.editRz.value)||0; obj.density=Math.max(Number(els.editMassOrDensity.value)||0.001,0.001); } else { obj.position.set(Number(els.editX.value)||0, Number(els.editY.value)||0, Number(els.editZ.value)||0); obj.mass=Math.max(Number(els.editMassOrDensity.value)||0,0); } refreshComponentList(); analyze(); }
+function removeSelected(){ if(!state.selected) return; const [kind,id]=state.selected.split(':'); if(kind==='part') state.parts=state.parts.filter(p=>p.id!==id); else state.hardware=state.hardware.filter(h=>h.id!==id); state.selected=null; els.selectedId.value=''; refreshComponentList(); analyze(); }
+function resetAll(){ state.parts=[]; state.hardware=[]; state.analysis=null; state.selected=null; refreshComponentList(); clearGroup(assemblyGroup); clearGroup(overlayGroup); ['mVolume','mPartMass','mHardwareMass','mTotalMass','mCom','mShift'].forEach(id=>els[id].textContent='—'); els.actionsTable.innerHTML=''; els.summaryList.innerHTML=''; els.breakdownTable.innerHTML=''; els.reportBox.textContent='No analysis yet.'; els.statusBox.textContent='Workspace reset.'; }
+async function addParts(){ const files=[...els.multiFile.files||[]]; if(!files.length){ els.statusBox.textContent='Select STL files first.'; return; } const loader=new STLLoader(); for(let i=0;i<files.length;i++){ const file=files[i]; const ab=await file.arrayBuffer(); const geo=loader.parse(ab); geo.computeVertexNormals(); const base=geo.toNonIndexed(); state.parts.push({ id:crypto.randomUUID(), name:(els.partName.value.trim() || file.name.replace(/\.stl$/i,'')) + (files.length>1?`-${i+1}`:''), baseGeometry:base, transformedGeometry:base.clone(), density:Math.max(Number(els.partDensity.value)||Number(els.density.value)||1.24,0.001), color:els.partColor.value, transform:{ tx:Number(els.partTx.value)||0, ty:Number(els.partTy.value)||0, tz:Number(els.partTz.value)||0, rx:Number(els.partRx.value)||0, ry:Number(els.partRy.value)||0, rz:Number(els.partRz.value)||0 } }); }
+  els.multiFile.value=''; els.partName.value=''; refreshComponentList(); analyze(); }
+function addHardware(){ const mass=Math.max(Number(els.hwMass.value)||0,0); if(!mass){ els.statusBox.textContent='Enter a hardware mass greater than zero.'; return; } state.hardware.push({ id:crypto.randomUUID(), name:els.hwName.value.trim()||`hardware-${state.hardware.length+1}`, mass, color:els.hwColor.value, position:parseVecFromInputs(els.hwX,els.hwY,els.hwZ) }); els.hwName.value=''; els.hwMass.value='0'; refreshComponentList(); analyze(); }
+function makeBox(w,h,d,tx,ty,tz){ const g=new THREE.BoxGeometry(w,h,d).toNonIndexed(); g.translate(tx,ty,tz); return g; }
+function loadDemo(){ resetAll(); [ {name:'bearing-carrier', geo:makeBox(44,30,14,0,0,0), density:1.24, color:'#6fb0b7', t:{tx:0,ty:0,tz:0,rx:0,ry:0,rz:0}}, {name:'arm-body', geo:makeBox(94,16,18,54,0,0), density:1.24, color:'#d0906c', t:{tx:0,ty:0,tz:0,rx:0,ry:0,rz:0}}, {name:'end-mount', geo:makeBox(26,24,20,112,4,8), density:1.24, color:'#89b36d', t:{tx:0,ty:0,tz:0,rx:0,ry:0,rz:0}} ].forEach(item=>state.parts.push({ id:crypto.randomUUID(), name:item.name, baseGeometry:item.geo, transformedGeometry:item.geo.clone(), density:item.density, color:item.color, transform:item.t })); state.hardware.push({ id:crypto.randomUUID(), name:'camera', mass:32, color:'#ffd166', position:new THREE.Vector3(124,6,9) }); state.hardware.push({ id:crypto.randomUUID(), name:'bearing-set', mass:12, color:'#f4a261', position:new THREE.Vector3(0,0,0) }); refreshComponentList(); analyze(); }
+function addDemoHardware(){ state.hardware.push({ id:crypto.randomUUID(), name:'magnet pair', mass:8, color:'#ffd166', position:new THREE.Vector3(88,0,-10) }); state.hardware.push({ id:crypto.randomUUID(), name:'M3 insert group', mass:5.5, color:'#f4a261', position:new THREE.Vector3(18,0,0) }); refreshComponentList(); analyze(); }
+function exportProject(){ const project={ settings:{ density:els.density.value, ballastDensity:els.ballastDensity.value, targetMode:els.targetMode.value, bambuPreset:els.bambuPreset.value, customPoint:els.customPoint.value, assemblyTargetMass:els.assemblyTargetMass.value, axisStart:els.axisStart.value, axisEnd:els.axisEnd.value, weightPocketDist:els.weightPocketDist.value, notes:els.notes.value }, parts: state.parts.map(p=>({ id:p.id, name:p.name, density:p.density, color:p.color, transform:p.transform, geometry:Array.from(p.baseGeometry.attributes.position.array) })), hardware: state.hardware.map(h=>({ id:h.id, name:h.name, mass:h.mass, color:h.color, position:{x:h.position.x,y:h.position.y,z:h.position.z} })) }; downloadBlob('stl-balance-project.json','application/json',JSON.stringify(project)); }
+async function importProject(file){ const txt=await file.text(); const project=JSON.parse(txt); resetAll(); Object.entries(project.settings||{}).forEach(([k,v])=>{ if(els[k]) els[k].value=v; }); (project.parts||[]).forEach(p=>{ const geo=new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.Float32BufferAttribute(p.geometry,3)); geo.computeVertexNormals(); state.parts.push({ id:p.id||crypto.randomUUID(), name:p.name, density:p.density, color:p.color||'#6fb0b7', baseGeometry:geo.toNonIndexed(), transformedGeometry:geo.toNonIndexed(), transform:p.transform||{tx:0,ty:0,tz:0,rx:0,ry:0,rz:0} }); }); (project.hardware||[]).forEach(h=>state.hardware.push({ id:h.id||crypto.randomUUID(), name:h.name, mass:h.mass, color:h.color||'#ffd166', position:new THREE.Vector3(h.position.x,h.position.y,h.position.z) })); refreshComponentList(); analyze(); }
+function exportJsonReport(){ const payload={ analysis: state.analysis, settings:{ targetMode:els.targetMode.value, bambuPreset:els.bambuPreset.value, axisStart:els.axisStart.value, axisEnd:els.axisEnd.value }, parts: state.parts.map(p=>({ name:p.name, density:p.density, color:p.color, transform:p.transform })), hardware: state.hardware.map(h=>({ name:h.name, mass:h.mass, color:h.color, position:h.position })) }; downloadBlob('stl-balance-report.json','application/json',JSON.stringify(payload,null,2)); }
+function exportCsv(){ const rows=[['name','type','mass_g','x_mm','y_mm','z_mm']]; (state.analysis?.breakdown||[]).forEach(r=>rows.push([r.name,r.type,fmt(r.mass,3),fmt(r.pos.x,3),fmt(r.pos.y,3),fmt(r.pos.z,3)])); downloadBlob('stl-balance-breakdown.csv','text/csv',rows.map(r=>r.join(',')).join('\n')); }
+
+els.addPartsBtn.onclick=()=>addParts().catch(err=>{ console.error(err); els.statusBox.innerHTML='<span class="warn">Could not parse one of the STL files.</span>'; });
+els.addHardwareBtn.onclick=addHardware; els.demoHardwareBtn.onclick=addDemoHardware; els.sampleBtn.onclick=loadDemo; els.resetBtn.onclick=resetAll; els.analyzeBtn.onclick=analyze; els.applyEditBtn.onclick=applyEdits; els.removeSelectedBtn.onclick=removeSelected;
+els.saveProjectBtn.onclick=exportProject; els.loadProjectBtn.onclick=()=>els.projectFile.click(); els.projectFile.onchange=(e)=>{ const f=e.target.files?.[0]; if(f) importProject(f); };
+els.downloadTxtBtn.onclick=()=>downloadBlob('stl-balance-report.txt','text/plain', state.analysis?.report || 'No analysis yet.'); els.downloadJsonBtn.onclick=exportJsonReport; els.downloadCsvBtn.onclick=exportCsv;
+[els.density,els.ballastDensity,els.targetMode,els.bambuPreset,els.customPoint,els.assemblyTargetMass,els.axisStart,els.axisEnd,els.weightPocketDist].forEach(el=>el.addEventListener('change',()=>{ if(state.parts.length||state.hardware.length) analyze(); }));
+refreshComponentList();
+</script>
+</body>
+</html>
