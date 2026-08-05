@@ -1,0 +1,43 @@
+﻿{
+    "model":  "C:\\Users\\krist\\3MF-STL-balance-ultimate\\bambu-bridge\\test-sample.3mf",
+    "analysis":  {
+                     "file":  "C:\\Users\\krist\\3MF-STL-balance-ultimate\\bambu-bridge\\test-sample.3mf",
+                     "triangles":  1,
+                     "volume_mm3":  0,
+                     "volume_cm3":  0,
+                     "surface_area_mm2":  50,
+                     "surface_area_cm2":  0.5,
+                     "mass_g":  0,
+                     "density_g_cm3":  1.24,
+                     "com_mm":  {
+                                    "x":  0,
+                                    "y":  0,
+                                    "z":  0
+                                },
+                     "bbox":  {
+                                  "min":  {
+                                              "x":  0,
+                                              "y":  0,
+                                              "z":  0
+                                          },
+                                  "max":  {
+                                              "x":  0,
+                                              "y":  0,
+                                              "z":  0
+                                          }
+                              },
+                     "size_mm":  {
+                                     "x":  0,
+                                     "y":  0,
+                                     "z":  0
+                                 }
+                 },
+    "recommendation":  {
+                           "ballastVolume_cm3":  0,
+                           "hollowVolume_cm3":  0,
+                           "reason":  "",
+                           "leverAxis":  "z",
+                           "preset":  "general",
+                           "ballastMass_g":  0
+                       }
+}
