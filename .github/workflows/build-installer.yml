@@ -1,0 +1,68 @@
+﻿
+name: Build Bambu Balance Installer
+
+
+on:
+
+workflow_dispatch:
+
+push:
+
+branches: [ kristjan6-bambu-hook-integration, main ]
+
+
+jobs:
+
+build-installer:
+
+runs-on: windows-latest
+
+
+Plain text
+
+
+
+
+```
+steps:
+- name: Checkout
+  uses: actions/checkout@v4
+
+- name: Setup Node.js
+  uses: actions/setup-node@v4
+  with:
+    node-version: '18'
+
+- name: Install dependencies (bambu-bridge)
+  working-directory: bambu-bridge
+  run: |
+    npm ci --no-audit --no-fund
+
+- name: Prepare staging folder
+  run: |
+    rd /s /q staging || exit 0
+    mkdir staging
+    xcopy /e /i /y bambu-bridge staging\\bambu-bridge
+    xcopy /e /i /y index.html staging
+    xcopy /e /i /y README.md staging
+    xcopy /e /i /y LICENSE.txt staging
+
+- name: Install NSIS
+  run: choco install nsis -y
+
+- name: Build installer
+  run: |
+    makensis -V4 bambu-installer.nsi
+
+- name: Upload artifact
+  uses: actions/upload-artifact@v4
+  with:
+    name: bambu-balance-installer
+    path: bambu-balance-ultimate-setup.exe
+
+```
+
+
+
+
+
