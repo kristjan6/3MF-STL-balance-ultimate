@@ -1,0 +1,33 @@
+{
+  "name": "bambu-balance-ultimate",
+  "version": "1.0.0",
+  "description": "Bambu Studio pre-slice hook integration for automatic balance analysis",
+  "main": "bambu-bridge/server.js",
+  "scripts": {
+    "start": "node bambu-bridge/server.js",
+    "analyze": "node balance-cli.js",
+    "test": "node balance-cli.js --help"
+  },
+  "keywords": [
+    "bambu-studio",
+    "3d-printing",
+    "balance",
+    "analysis",
+    "hook"
+  ],
+  "author": "STL Balance",
+  "license": "MIT",
+  "dependencies": {
+    "jszip": "^3.10.1",
+    "xmldom": "^0.6.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "homepage": "https://github.com/kristjan6/3MF-STL-balance-ultimate",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kristjan6/3MF-STL-balance-ultimate.git"
+  }
+}
